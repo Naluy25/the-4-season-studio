@@ -5,5 +5,12 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import netlify from "@netlify/vite-plugin-tanstack-start";
 
-export default defineConfig();
+// We disable the default Cloudflare adapter and plug Netlify's adapter instead
+// so the same TanStack Start app can be deployed straight from GitHub to Netlify
+// (with full SSR running on Netlify Functions).
+export default defineConfig({
+  cloudflare: false,
+  plugins: [netlify()],
+});
