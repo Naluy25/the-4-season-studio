@@ -1,19 +1,27 @@
 ###############################################################################
 # Netlify deployment configuration for THE 4 SEASON STUDIO
 #
-# The Lovable preview uses TanStack Start (SSR on Cloudflare Workers). For
-# Netlify we run a dedicated client-only Vite build (vite.spa.config.ts) that
-# emits a real static `index.html` + hashed assets in `dist/spa/`. SPA
-# fallback below ensures every route resolves on first hit / refresh.
+# The Lovable preview uses TanStack Start (SSR on Cloudflare Workers).
+# For Netlify we run a dedicated client-only Vite build (vite.spa.config.ts)
+# that emits a real static `index.html` + hashed assets in `dist/spa/`.
+#
+# Notes:
+# - Dependency install is handled by Netlify automatically using
+#   `package-lock.json` + npm (Node version pinned by `.nvmrc`).
+# - `legacy-peer-deps` is configured in `.npmrc` so it always applies.
+# - We do NOT re-run `npm install` in the build command (it would slow
+#   the build and can clash with Netlify's pre-install phase).
 ###############################################################################
 
 [build]
-  command = "npm install --legacy-peer-deps && npx vite build --config vite.spa.config.ts"
+  command = "npx vite build --config vite.spa.config.ts"
   publish = "dist/spa"
 
 [build.environment]
-  NODE_VERSION = "20"
-  NPM_FLAGS    = "--legacy-peer-deps"
+  # Force npm — prevents Netlify from auto-detecting bun.lockb and bailing
+  # because bun isn't installed by default in the build image.
+  NETLIFY_USE_PNPM = "false"
+  NETLIFY_USE_YARN = "false"
 
 ###############################################################################
 # SPA fallback — every unknown route serves index.html so the client router
