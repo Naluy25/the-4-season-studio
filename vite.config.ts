@@ -6,4 +6,27 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  tanstackStart: {
+    // Pre-render all routes to static HTML so the site can be deployed
+    // as a static SPA on Netlify (and any static host).
+    prerender: {
+      enabled: true,
+      crawlLinks: true,
+      autoSubfolderIndex: true,
+      retryCount: 2,
+    },
+    pages: [
+      { path: "/" },
+      { path: "/shop" },
+      { path: "/packages" },
+      { path: "/portfolio" },
+      { path: "/portfolio/social" },
+      { path: "/portfolio/design" },
+      { path: "/portfolio/web" },
+      { path: "/portfolio/management" },
+      { path: "/testimonials" },
+      { path: "/how-to-buy" },
+    ],
+  },
+});
