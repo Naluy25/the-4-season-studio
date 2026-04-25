@@ -1,17 +1,15 @@
 ###############################################################################
 # Netlify deployment configuration for THE 4 SEASON STUDIO
 #
-# This project is built with TanStack Start (Vite). For Netlify we deploy
-# the static client build and rely on SPA fallback so that all routes
-# (e.g. /shop, /portfolio, /packages...) work on direct visit & refresh.
+# The Lovable preview uses TanStack Start (SSR on Cloudflare Workers). For
+# Netlify we run a dedicated client-only Vite build (vite.spa.config.ts) that
+# emits a real static `index.html` + hashed assets in `dist/spa/`. SPA
+# fallback below ensures every route resolves on first hit / refresh.
 ###############################################################################
 
 [build]
-  # Install deps, build the client bundle, then generate a static SPA index.html
-  # so Netlify can serve the app as a static site.
-  command   = "npm install && npm run build && node scripts/generate-spa-html.mjs"
-  # TanStack Start / Vite outputs the client assets to dist/client
-  publish   = "dist/client"
+  command = "npm install --legacy-peer-deps && npx vite build --config vite.spa.config.ts"
+  publish = "dist/spa"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -19,8 +17,8 @@
 
 ###############################################################################
 # SPA fallback — every unknown route serves index.html so the client router
-# (TanStack Router) can take over. Without this, refreshing on /shop or
-# /portfolio would return 404 from Netlify's static host.
+# (TanStack Router) takes over. Without this, refreshing /shop or /portfolio
+# returns 404 from Netlify's static host.
 ###############################################################################
 
 [[redirects]]
@@ -29,7 +27,7 @@
   status = 200
 
 ###############################################################################
-# Long-cache static assets (hashed filenames produced by Vite)
+# Long-cache hashed static assets produced by Vite
 ###############################################################################
 
 [[headers]]
