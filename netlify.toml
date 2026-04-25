@@ -7,8 +7,9 @@
 ###############################################################################
 
 [build]
-  # Install deps then build the client bundle
-  command   = "npm install && npm run build"
+  # Install deps, build the client bundle, then generate a static SPA index.html
+  # so Netlify can serve the app as a static site.
+  command   = "npm install && npm run build && node scripts/generate-spa-html.mjs"
   # TanStack Start / Vite outputs the client assets to dist/client
   publish   = "dist/client"
 
