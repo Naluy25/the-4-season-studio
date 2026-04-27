@@ -1,11 +1,10 @@
 @import "tailwindcss" source(none);
-@source "../src";
 @import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
-
 /* Tajawal Arabic font */
 @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+@source "../src";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-sans: "Tajawal", system-ui, sans-serif;
