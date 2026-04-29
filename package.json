@@ -3,9 +3,14 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "build:netlify": "vite build --config vite.spa.config.ts",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
