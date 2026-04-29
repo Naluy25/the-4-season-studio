@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Code, Palette, Smartphone, BarChart3, ChevronLeft } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
-import workWeb1 from "@/assets/work-web1.jpg";
-import workLogo2 from "@/assets/work-logo2.jpg";
-import workSocial1 from "@/assets/work-social1.jpg";
-import workRestaurant from "@/assets/work-restaurant.jpg";
+// ⚠️ مؤقتاً نفس لينك درايف لكل الصور — غيّره لاحقاً
+const PLACEHOLDER = "https://drive.google.com/uc?export=view&id=1g23n_n-WHe-vAwfqJG1pCMsrZvbKIvAH";
+const workWeb1 = PLACEHOLDER;
+const workLogo2 = PLACEHOLDER;
+const workSocial1 = PLACEHOLDER;
+const workRestaurant = PLACEHOLDER;
 
 export const Route = createFileRoute("/portfolio/")({
   head: () => ({
